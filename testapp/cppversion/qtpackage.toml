@@ -1,0 +1,7 @@
+name = "Cppversion"
+author = "shibukawa.yoshiki"
+organization = ""
+license = "The MIT License (MIT)"
+qtmodules = ["Core", "Gui", "Widgets"]
+version = [0, 1, 0]
+project_start_year = 2016

@@ -1,0 +1,4 @@
+# Additional configuration
+# This file is included from auto generated CMakeLists.txt
+
+include_directories(vendor/debug/include)

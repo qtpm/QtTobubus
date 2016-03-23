@@ -1,0 +1,13 @@
+#ifndef QTTOBUBUS_GLOBAL_H
+#define QTTOBUBUS_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(QTTOBUBUS_LIBRARY)
+#  define QTTOBUBUSSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define QTTOBUBUSSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // QTTOBUBUS_GLOBAL_H
+
