@@ -1,10 +1,9 @@
 #ifndef STATUS_H
 #define STATUS_H
 
-#include "qttobubus_global.h"
 #include <QObject>
 
-class QTTOBUBUSSHARED_EXPORT Call : public QObject {
+class Call : public QObject {
     Q_OBJECT
 
     Q_ENUMS(Status)

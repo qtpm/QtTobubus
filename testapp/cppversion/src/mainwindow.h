@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <qttobubus/qtobubushost.h>
 
 namespace Ui {
 class MainWindow;
@@ -10,7 +11,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
+    QTobubusHost* _host;
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();

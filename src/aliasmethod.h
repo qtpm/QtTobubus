@@ -1,7 +1,6 @@
 #ifndef ALIASMETHOD_H
 #define ALIASMETHOD_H
 
-#include "qttobubus_global.h"
 #include "status.h"
 
 template <typename T>

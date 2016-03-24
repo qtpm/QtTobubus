@@ -1,32 +1,21 @@
 #ifndef QTOBUBUSHOST_H
 #define QTOBUBUSHOST_H
 
-#include "qttobubus_global.h"
 #include <QObject>
-#include <QLocalServer>
-#include <QIODevice>
-#include <QReadWriteLock>
-#include <QScopedPointer>
-#include <QMap>
 #include <QSharedPointer>
 #include "aliasobject.h"
 #include "status.h"
 
+class HostThread;
 class SessionManager;
-class Proxy;
+class QIODevice;
 
-class QTTOBUBUSSHARED_EXPORT QTobubusHost : public QObject {
+class QTobubusHost : public QObject {
     Q_OBJECT
 
-    QString _pipeName;
-    QLocalServer* _server;
     SessionManager* _sessions;
-    mutable QReadWriteLock _lock;
-
-    QMap<QString, QIODevice*> _pluginReservedSpaces;
-    QMap<QString, Proxy*> _localObjectMap;
-    QMap<QString, QIODevice*> _sockets;
-
+    QString _pipeName;
+    HostThread* _thread;
 public:
     explicit QTobubusHost(const QString& pipeName, QObject *parent = 0);
     virtual ~QTobubusHost();
@@ -37,7 +26,6 @@ public:
     QString getPipeName() const;
 
     void listen();
-    void listenAndServe();
     void close();
     bool unregister(const QString& pluginID);
     void publish(const QString& path, QSharedPointer<QObject> instance);
@@ -46,11 +34,10 @@ public:
     QVariant apply(const QString& path, const QString& method, QVariantList params);
     QVariant apply(const QString& path, const QString& method, Call::Status* status, QVariantList params);
 
-private:
-    bool receiveMessage(QIODevice* socket);
-    void listenAndServeTo(QIODevice *socket);
-    void _unregister(QIODevice *socket);
-    bool _sendCloseClientMessage(QIODevice *socket);
+signals:
+    void clientConnected(QString id);
+    void objectPublished(QString id, QString path);
+    void methodCalled(QString id, QString path, QString method, QVariantList params);
 };
 
 #endif // QTOBUBUSHOST_H

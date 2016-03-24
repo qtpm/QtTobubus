@@ -67,9 +67,9 @@ QVariant Proxy::call(const QString& name, QVariantList params)
 
 	if (this->_methods.end() != iter) {
 		auto method = iter.value();
-        int returnInt = 0;
-        double returnFlaot = 0.0;
-        bool returnBool = false;
+		int returnInt = 0;
+		double returnFlaot = 0.0;
+		bool returnBool = false;
 		QString returnString;
 		QStringList returnStringList;
 		QVariantList returnList;
@@ -138,7 +138,7 @@ QVariant Proxy::call(const QString& name, QVariantList params)
 					break;
 			}
 		}
-        auto ok = false;
+		auto ok = false;
 		switch (params.size()) {
 			case 0:
 				ok = method->method.invoke(this->_instance.data(), returnArgument);

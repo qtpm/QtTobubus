@@ -25,7 +25,7 @@ QByteArray Message::archive(MessageType type, quint32 sessionID)
 	QDataStream stream(&result, QIODevice::WriteOnly);
 	stream.setByteOrder(QDataStream::LittleEndian);
 	stream << (quint32)type << sessionID << (quint32)0;
-    return result;
+	return result;
 }
 
 QByteArray Message::archive(MessageType type, quint32 sessionID, const QByteArray& body)
@@ -35,7 +35,7 @@ QByteArray Message::archive(MessageType type, quint32 sessionID, const QByteArra
 	stream.setByteOrder(QDataStream::LittleEndian);
 	stream << (quint32)type << sessionID << (quint32)body.size();
 	stream.writeRawData(body.constData(), body.size());
-    return result;
+	return result;
 }
 
 MethodCall* MethodCall::parse(const QByteArray& data)
@@ -50,5 +50,5 @@ QByteArray MethodCall::archive(MessageType type, quint32 sessionID, const QStrin
 	const QString& methodName, const QVariantList& params)
 {
 	QMap<QString, QVariant> map{{"path", path}, {"method", methodName}, {"params", params}};
-    return Message::archive(type, sessionID, QCBOR::pack(map));
+	return Message::archive(type, sessionID, QCBOR::pack(map));
 }

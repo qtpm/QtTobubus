@@ -1,7 +1,9 @@
 name = "Cppversion"
+description = ""
 author = "shibukawa.yoshiki"
 organization = ""
 license = "The MIT License (MIT)"
+requires = ["github.com/qtpm/QtCBOR", "github.com/qtpm/QtTobubus"]
 qtmodules = ["Core", "Gui", "Widgets"]
 version = [0, 1, 0]
 project_start_year = 2016

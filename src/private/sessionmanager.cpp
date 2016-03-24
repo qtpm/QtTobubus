@@ -36,7 +36,7 @@ Message* SessionManager::receiveAndClose(quint32 sessionID)
 		chan = this->_sessions[sessionID];
 	}
 	this->_mutex.unlock();
-    Message* result = nullptr;
+	Message* result = nullptr;
 	chan->recv(result);
 	this->_sessions.remove(sessionID);
 	return result;

@@ -10,9 +10,9 @@ This is a `qtpm <https://github.com/qtpm/qtpm>`_ package.
 
 .. code-block:: bash
 
-   $ qtpm get github.com/shibukawa.yoshiki/qttobubus
+   $ qtpm get github.com/qtpm/QtTobubus
 
-Headers and a library file are installed under ``vendor/include`` and ``vendor/lib`` directory.
+Headers and a library file are installed under ``dest/*/include`` and ``dest/*/lib`` directory.
 
 Example
 --------------
@@ -49,7 +49,7 @@ Develop
    # Build and run test
    $ qtpm test
 
-   # Try install to ``vendor`` folder
+   # Try install to ``dest`` folder
    $ qtpm build
 
 
