@@ -1,5 +1,4 @@
-#ifndef PROXY_H
-#define PROXY_H
+#pragma once
 
 #include <QObject>
 #include <QSet>
@@ -19,5 +18,3 @@ public:
 	QVariant call(const QString& name, QVariantList args);
 	bool hasMethod(const QString& name) const;
 };
-
-#endif // PROXY_H

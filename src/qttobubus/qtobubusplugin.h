@@ -1,5 +1,4 @@
-#ifndef QTOBUBUSPLUGIN_H
-#define QTOBUBUSPLUGIN_H
+#pragma once
 
 #include <QObject>
 
@@ -10,6 +9,3 @@ public:
 signals:
 public slots:
 };
-
-#endif // QTOBUBUSPLUGIN_H
-

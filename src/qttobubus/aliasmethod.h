@@ -1,5 +1,4 @@
-#ifndef ALIASMETHOD_H
-#define ALIASMETHOD_H
+#pragma once
 
 #include "status.h"
 
@@ -15,55 +14,55 @@ public:
         : _dispatcher(dispacher), _path(path), _method(method) {
     }
 
-    QVariant operator()() {
+    QVariant operator()(std::function<void(QVariant)> callback) {
         return this->apply(QVariantList{});
     }
 
-    QVariant operator()(QVariant arg1) {
+    QVariant operator()(QVariant arg1, std::function<void(QVariant)> callback) {
         return this->apply(QVariantList{arg1});
     }
 
-    QVariant operator()(QVariant arg1, QVariant arg2) {
+    QVariant operator()(QVariant arg1, QVariant arg2, std::function<void(QVariant)> callback) {
 
         return this->apply(QVariantList{arg1, arg2});
     }
 
-    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3){
+    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, std::function<void(QVariant)> callback){
         return this->apply(QVariantList{arg1, arg2, arg3});
 
     }
 
-    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4){
+    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, std::function<void(QVariant)> callback){
         return this->apply(QVariantList{arg1, arg2, arg3, arg4});
 
     }
 
-    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5){
+    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, std::function<void(QVariant)> callback){
         return this->apply(QVariantList{arg1, arg2, arg3, arg4, arg5});
 
     }
 
-    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6){
+    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6, std::function<void(QVariant)> callback){
         return this->apply(QVariantList{arg1, arg2, arg3, arg4, arg5, arg6});
 
     }
 
-    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6, QVariant arg7){
+    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6, QVariant arg7, std::function<void(QVariant)> callback){
         return this->apply(QVariantList{arg1, arg2, arg3, arg4, arg5, arg6, arg7});
 
     }
 
-    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6, QVariant arg7, QVariant arg8){
+    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6, QVariant arg7, QVariant arg8, std::function<void(QVariant)> callback){
         return this->apply(QVariantList{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8});
 
     }
 
-    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6, QVariant arg7, QVariant arg8, QVariant arg9){
+    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6, QVariant arg7, QVariant arg8, QVariant arg9, std::function<void(QVariant)> callback){
         return this->apply(QVariantList{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9});
 
     }
 
-    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6, QVariant arg7, QVariant arg8, QVariant arg9, QVariant arg10){
+    QVariant operator()(QVariant arg1, QVariant arg2, QVariant arg3, QVariant arg4, QVariant arg5, QVariant arg6, QVariant arg7, QVariant arg8, QVariant arg9, QVariant arg10, std::function<void(QVariant)> callback){
         return this->apply(QVariantList{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10});
 
     }
@@ -137,6 +136,3 @@ public:
         return this->_dispatcher->apply(this->_path, this->_method, params);
     }
 };
-
-#endif // ALIASMETHOD_H
-

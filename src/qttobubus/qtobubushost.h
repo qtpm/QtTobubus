@@ -1,27 +1,36 @@
-#ifndef QTOBUBUSHOST_H
-#define QTOBUBUSHOST_H
+#pragma once
 
 #include <QObject>
 #include <QSharedPointer>
+#include <QReadWriteLock>
 #include "aliasobject.h"
 #include "status.h"
 
-class HostThread;
+class CallbackManager;
 class SessionManager;
+class Proxy;
 class QIODevice;
+class QLocalServer;
+class HostSocketThread;
+struct Message;
 
 class QTobubusHost : public QObject {
     Q_OBJECT
 
     SessionManager* _sessions;
+    QLocalServer* _server;
     QString _pipeName;
-    HostThread* _thread;
+    mutable QReadWriteLock _lock;
+
+    QMap<QString, HostSocketThread*> _pluginReservedSpaces;
+    QMap<QString, Proxy*> _localObjectMap;
+    QMap<QString, HostSocketThread*> _id2socket;
+    QMap<const HostSocketThread*, QString> _socket2id;
+
 public:
     explicit QTobubusHost(const QString& pipeName, QObject *parent = 0);
     virtual ~QTobubusHost();
 
-    QIODevice* getSocket(const QString& pluginID) const;
-    QString getPluginID(const QIODevice* socket) const;
     bool confirmPath(const QString& path) const;
     QString getPipeName() const;
 
@@ -31,14 +40,17 @@ public:
     void publish(const QString& path, QSharedPointer<QObject> instance);
 
     AliasObject<QTobubusHost> operator[](const QString path);
-    QVariant apply(const QString& path, const QString& method, QVariantList params);
-    QVariant apply(const QString& path, const QString& method, Call::Status* status, QVariantList params);
+    void apply(const QString& path, const QString& method, QVariantList params);
 
+    friend class HostSocketThread;
 signals:
     void clientConnected(QString id);
     void objectPublished(QString id, QString path);
+    void methodResult(QString path, QString method, QVariantList result, Call::Status status);
     void methodCalled(QString id, QString path, QString method, QVariantList params);
+
+private:
+    void _unregister(HostSocketThread* socket, bool lock=false);
+    void _sendCloseClientMessage(HostSocketThread* socket);
+    bool _onReceiveMessage(Message* msg, HostSocketThread* socket);
 };
-
-#endif // QTOBUBUSHOST_H
-

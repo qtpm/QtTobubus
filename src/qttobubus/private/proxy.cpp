@@ -1,6 +1,7 @@
 #include "proxy.h"
 #include <QDebug>
 #include <QMetaMethod>
+#include <QThread>
 
 enum ArgType {
 	IntType,
@@ -139,50 +140,56 @@ QVariant Proxy::call(const QString& name, QVariantList params)
 			}
 		}
 		auto ok = false;
+        Qt::ConnectionType connectionType;
+        if (QThread::currentThread() == this->_instance.data()->thread()) {
+            connectionType = Qt::DirectConnection;
+        } else {
+            connectionType = Qt::BlockingQueuedConnection;
+        }
 		switch (params.size()) {
 			case 0:
-				ok = method->method.invoke(this->_instance.data(), returnArgument);
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument);
 				break;
 			case 1:
-				ok = method->method.invoke(this->_instance.data(), returnArgument, arguments[0]);
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument, arguments[0]);
 				break;
 			case 2:
 				ok = method->method.invoke(
-					this->_instance.data(), returnArgument, arguments[0], arguments[1]);
+                    this->_instance.data(), connectionType, returnArgument, arguments[0], arguments[1]);
 				break;
 			case 3:
-				ok = method->method.invoke(this->_instance.data(), returnArgument, arguments[0],
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument, arguments[0],
 					arguments[1], arguments[2]);
 				break;
 			case 4:
-				ok = method->method.invoke(this->_instance.data(), returnArgument, arguments[0],
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument, arguments[0],
 					arguments[1], arguments[2], arguments[3]);
 				break;
 			case 5:
-				ok = method->method.invoke(this->_instance.data(), returnArgument, arguments[0],
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument, arguments[0],
 					arguments[1], arguments[2], arguments[3], arguments[4]);
 				break;
 			case 6:
-				ok = method->method.invoke(this->_instance.data(), returnArgument, arguments[0],
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument, arguments[0],
 					arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
 				break;
 			case 7:
-				ok = method->method.invoke(this->_instance.data(), returnArgument, arguments[0],
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument, arguments[0],
 					arguments[1], arguments[2], arguments[3], arguments[4], arguments[5],
 					arguments[6]);
 				break;
 			case 8:
-				ok = method->method.invoke(this->_instance.data(), returnArgument, arguments[0],
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument, arguments[0],
 					arguments[1], arguments[2], arguments[3], arguments[4], arguments[5],
 					arguments[6], arguments[7]);
 				break;
 			case 9:
-				ok = method->method.invoke(this->_instance.data(), returnArgument, arguments[0],
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument, arguments[0],
 					arguments[1], arguments[2], arguments[3], arguments[4], arguments[5],
 					arguments[6], arguments[7], arguments[8]);
 				break;
 			case 10:
-				ok = method->method.invoke(this->_instance.data(), returnArgument, arguments[0],
+                ok = method->method.invoke(this->_instance.data(), connectionType, returnArgument, arguments[0],
 					arguments[1], arguments[2], arguments[3], arguments[4], arguments[5],
 					arguments[6], arguments[7], arguments[8], arguments[9]);
 				break;

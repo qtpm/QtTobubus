@@ -19,6 +19,7 @@ public:
 private slots:
     void on_OpenButton_clicked();
     void on_SendButton_clicked();
+    void on_methodResult(QString path, QString method, QVariantList result, Call::Status status);
 
 private:
     Ui::MainWindow *ui;

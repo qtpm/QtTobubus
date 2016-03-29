@@ -1,4 +1,4 @@
-#include "private/message.h"
+#include "qttobubus/private/message.h"
 #include <QBuffer>
 #include <QByteArray>
 #include <QScopedPointer>

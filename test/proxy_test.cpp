@@ -1,4 +1,4 @@
-#include "private/proxy.h"
+#include "qttobubus/private/proxy.h"
 #include "sample.h"
 #include <QString>
 #include <QtTest>

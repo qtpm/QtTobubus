@@ -1,5 +1,4 @@
-#ifndef MESSAGE_H
-#define MESSAGE_H
+#pragma once
 
 #include <QByteArray>
 #include <QLocalSocket>
@@ -12,7 +11,8 @@ enum MessageType {
 	ResultNG = 0x2,
 	ResultObjectNotFound = 0x3,
 	ResultMethodNotFound = 0x4,
-	ConnectClient = 0x10,
+    ResultMethodError = 0x5,
+    ConnectClient = 0x10,
 	CloseClient = 0x11,
 	ConfirmPath = 0x20,
 	Publish = 0x21,
@@ -40,5 +40,3 @@ struct MethodCall {
 	static QByteArray archive(MessageType type, quint32 sessionID, const QString& path,
 		const QString& methodName, const QVariantList& params);
 };
-
-#endif // MESSAGE_H

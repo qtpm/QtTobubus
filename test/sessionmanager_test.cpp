@@ -1,4 +1,4 @@
-#include "private/sessionmanager.h"
+#include "qttobubus/private/sessionmanager.h"
 #include <QDebug>
 #include <QString>
 #include <QtConcurrent>
@@ -18,11 +18,7 @@ private Q_SLOTS:
 		QCOMPARE(manager.getUniqueSessionID(), (quint32)0);
 		QCOMPARE(manager.getUniqueSessionID(), (quint32)1);
 		QCOMPARE(manager.getUniqueSessionID(), (quint32)2);
-		auto future = QtConcurrent::run([&manager] {
-			auto channel = manager.getChannelOfSessionID(1);
-			channel->send(nullptr);
-		});
-		manager.receiveAndClose(1);
+        manager.close(1);
 		QCOMPARE(manager.getUniqueSessionID(), (quint32)1);
 	}
 
@@ -32,12 +28,8 @@ private Q_SLOTS:
 		QCOMPARE(manager.getUniqueSessionID(), (quint32)0);
 		QCOMPARE(manager.getUniqueSessionID(), (quint32)1);
 		QCOMPARE(manager.getUniqueSessionID(), (quint32)2);
-		auto future = QtConcurrent::run([&manager] {
-			auto channel = manager.getChannelOfSessionID(1);
-			channel->send(nullptr);
-		});
-		manager.receiveAndClose(1);
-		QCOMPARE(manager.getUniqueSessionID(), (quint32)3);
+        manager.close(1);
+        QCOMPARE(manager.getUniqueSessionID(), (quint32)3);
 	}
 };
 

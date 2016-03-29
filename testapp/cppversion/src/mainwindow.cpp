@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QtConcurrent>
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
@@ -34,6 +35,7 @@ void MainWindow::on_OpenButton_clicked()
 				this->ui->Log->appendPlainText(
 					tr("Method called from ") + id + " " + path + "#" + method);
 			});
+        connect(this->_host, SIGNAL(methodResult(QString,QString,QVariantList,Call::Status)), this, SLOT(on_methodResult(QString,QString,QVariantList,Call::Status)));
 	} else {
 		this->_host->close();
 		delete this->_host;
@@ -53,19 +55,21 @@ void MainWindow::on_SendButton_clicked()
 	QJsonDocument document = QJsonDocument::fromJson(ui->Parameter->toPlainText().toUtf8());
 	if (document.isArray()) {
 		auto array = document.array();
-		Call::Status status;
 		ui->Log->appendPlainText(tr("Send Method: ") + ui->Path->text() + "#" + ui->Method->text());
-		QVariant result = this->_host->apply(
-			ui->Path->text(), ui->Method->text(), &status, array.toVariantList());
-
-		QString output;
-		QDebug(&output) << status;
-
-		qDebug() << status;
-		qDebug() << result;
-		ui->Log->appendPlainText(tr("Status: ") + output);
-		ui->Log->appendPlainText(tr("Result: ") + QString(result.toJsonDocument().toJson()));
+        this->_host->apply(ui->Path->text(), ui->Method->text(), array.toVariantList());
 	} else {
 		ui->Log->appendPlainText(tr("Parameter is not valid array."));
-	}
+    }
+}
+
+void MainWindow::on_methodResult(QString path, QString method, QVariantList result, Call::Status status){
+                    qDebug() << "Main Thread:", QApplication::instance()->thread();
+                    qDebug() << "Current Thread:", QThread::currentThread();
+                    QString output;
+                    QDebug(&output) << status;
+
+                    qDebug() << status;
+                    qDebug() << result;
+                    this->ui->Log->appendPlainText(tr("Status: ") + output);
+                    this->ui->Log->appendPlainText(tr("Result: ") + QString(QVariant(result).toJsonDocument().toJson()));
 }

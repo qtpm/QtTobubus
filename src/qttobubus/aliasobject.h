@@ -1,5 +1,4 @@
-#ifndef ALIASOBJECT_H
-#define ALIASOBJECT_H
+#pragma once
 
 #include <QVariant>
 #include "aliasmethod.h"
@@ -28,6 +27,3 @@ public:
         return _dispatcher->apply(this->_path, method, status, params);
     }
 };
-
-#endif // ALIASOBJECT_H
-
